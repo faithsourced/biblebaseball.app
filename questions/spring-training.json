@@ -1,62 +1,12 @@
 [
-	{
-	"id":0,
-	"question": "Who wrote the words on the tables of stone for the 10 Commandments?",
-	"choices" : [{"id":1,"text":"God"},{"id":2,"text":"Moses"},{"id":3,"text":"Aaron"},{"id":4,"text":"Joshua"}],
-	"answer" : [{"id":1, "explanation":"God (Exodus 31:18, 34:1)"}]
-	},
-	{
-	"id":1,
-	"question": "Elijah went to Heaven in a…?",
-	"choices" : [{"id":1,"text":"Flaming Chariot"},{"id":2,"text":"Whirlwind"},{"id":3,"text":"Cloud"},{"id":4,"text":"Rainbow"}],
-	"answer" : [{"id":2, "explanation":"Whirlwind (2 Kings 2:1-14)"}]
-	},
-	{
-	"id":2,
-	"question": "Who was Samson’s wife?",
-	"choices" : [{"id":1,"text":"Delilah"},{"id":2,"text":"a Philistine"},{"id":3,"text":"a Timnathite"},{"id":4,"text":"a Canaanite"}],
-	"answer" : [{"id":3, "explanation":"a Timnathite - The Bible never says that Samson was married to Delilah (Judges 14&16)"}]
-	},
-	{
-	"id":3,
-	"question": "In Genesis 4 a musician is named. Who was he?",
-	"choices" : [{"id":1,"text":"Enoch"},{"id":2,"text":"Seth"},{"id":3,"text":"Abel"},{"id":4,"text":"Jubal"}],
-	"answer" : [{"id":4, "explanation":"Jubal (Genesis 4:21)"}]
-	},
-	{
-	"id":4,
-	"question": "Who was cremated in Jabeshgilead in 1 Samuel?",
-	"choices" : [{"id":1,"text":"Saul"},{"id":2,"text":"Samuel"},{"id":3,"text":"David"},{"id":4,"text":"Eli"}],
-	"answer" : [{"id":1, "explanation":"Saul (1 Samuel 31:11-13)"}]
-	},
-	{
-	"id":5,
-	"question": "What does Beth-El (or Bethel) in Genesis 28 mean?",
-	"choices" : [{"id":1,"text":"God is Salvation"},{"id":2,"text":"The house of God"},{"id":3,"text":"God is Merciful"},{"id":4,"text":"The house of bread"}],
-	"answer" : [{"id":2, "explanation":"The house of God (Genesis 28:17-19)"}]
-	},
-	{
-	"id":6,
-	"question": "God told Abraham that his children would be as numerous as what two things?",
-	"choices" : [{"id":1,"text":"Leaves on the tree, grass in the field"},{"id":2,"text":"Fish in the sea, birds in the air"},{"id":3,"text":"Stars in the sky, sand on the beach"},{"id":4,"text":"Cells in his body, hairs on his head"}],
-	"answer" : [{"id":3, "explanation":"Stars in the sky, sand on the beach (Genesis 22:17)"}]
-	},
-	{
-	"id":7,
-	"question": "What did Jonathan eat not knowing that his father had forbidden his soldiers to eat the rest of the day?",
-	"choices" : [{"id":1,"text":"The temple Show Bread"},{"id":2,"text":"Fruit and berries"},{"id":3,"text":"A handful of grain"},{"id":4,"text":"Honey"}],
-	"answer" : [{"id":4, "explanation":"Honey (1 Samuel 14:24-27)"}]
-	},
-	{
-	"id":8,
-	"question": "The oldest man in the Bible, Methuselah died before his father. How could that be?",
-	"choices" : [{"id":1,"text":"His father did not die"},{"id":2,"text":"His father died after him"},{"id":3,"text":"We do not know who his father was"},{"id":4,"text":"His father disowned him"}],
-	"answer" : [{"id":1, "explanation":"His father did not die - Enoch (Genesis 5:24)"}]
-	},
-	{
-	"id":9,
-	"question": "The word “hats” is only found once in the King James Version of the Bible. In which well-known story does it appear?",
-	"choices" : [{"id":1,"text":"Story of David and Goliath"},{"id":2,"text":"Story of Shadrach, Meshach and Abednego"},{"id":3,"text":"Story of Samson"},{"id":4,"text":"Story of Jonah"}],
-	"answer" : [{"id":2, "explanation":"Story of Shadrach, Meshach and Abednego - When they were put in the fiery furnace (Daniel 3:21)"}]
-	}
+	{"id":0,"question": "Who wrote the words on the tables of stone for the 10 Commandments?","choices" : [{"id":1,"text":"God"},{"id":2,"text":"Moses"},{"id":3,"text":"Aaron"},{"id":4,"text":"Joshua"}],"answer" : [{"id":1, "explanation":"God (Exodus 31:18, 34:1)"}]},
+	{"id":1,"question": "Elijah went to Heaven in a…?","choices" : [{"id":1,"text":"Flaming Chariot"},{"id":2,"text":"Whirlwind"},{"id":3,"text":"Cloud"},{"id":4,"text":"Rainbow"}],"answer" : [{"id":2, "explanation":"Whirlwind (2 Kings 2:1-14)"}]},
+	{"id":2,"question": "Who was Samson's wife?","choices" : [{"id":1,"text":"Delilah"},{"id":2,"text":"a Philistine"},{"id":3,"text":"a Timnathite"},{"id":4,"text":"a Canaanite"}],"answer" : [{"id":3, "explanation":"a Timnathite - The Bible never says that Samson was married to Delilah (Judges 14&16)"}]},
+	{"id":3,"question": "In Genesis 4 a musician is named. Who was he?","choices" : [{"id":1,"text":"Enoch"},{"id":2,"text":"Seth"},{"id":3,"text":"Abel"},{"id":4,"text":"Jubal"}],"answer" : [{"id":4, "explanation":"Jubal (Genesis 4:21)"}]},
+	{"id":4,"question": "Who was cremated in Jabeshgilead in 1 Samuel?","choices" : [{"id":1,"text":"Saul"},{"id":2,"text":"Samuel"},{"id":3,"text":"David"},{"id":4,"text":"Eli"}],"answer" : [{"id":1, "explanation":"Saul (1 Samuel 31:11-13)"}]},
+	{"id":5,"question": "What does Beth-El (or Bethel) in Genesis 28 mean?","choices" : [{"id":1,"text":"God is Salvation"},{"id":2,"text":"The house of God"},{"id":3,"text":"God is Merciful"},{"id":4,"text":"The house of bread"}],"answer" : [{"id":2, "explanation":"The house of God (Genesis 28:17-19)"}]},
+	{"id":6,"question": "God told Abraham that his children would be as numerous as what two things?","choices" : [{"id":1,"text":"Leaves on the tree, grass in the field"},{"id":2,"text":"Fish in the sea, birds in the air"},{"id":3,"text":"Stars in the sky, sand on the beach"},{"id":4,"text":"Cells in his body, hairs on his head"}],"answer" : [{"id":3, "explanation":"Stars in the sky, sand on the beach (Genesis 22:17)"}]},
+	{"id":7,"question": "What did Jonathan eat not knowing that his father had forbidden his soldiers to eat the rest of the day?","choices" : [{"id":1,"text":"The temple Show Bread"},{"id":2,"text":"Fruit and berries"},{"id":3,"text":"A handful of grain"},{"id":4,"text":"Honey"}],"answer" : [{"id":4, "explanation":"Honey (1 Samuel 14:24-27)"}]},
+	{"id":8,"question": "The oldest man in the Bible, Methuselah died before his father. How could that be?","choices" : [{"id":1,"text":"His father did not die"},{"id":2,"text":"His father died after him"},{"id":3,"text":"We do not know who his father was"},{"id":4,"text":"His father disowned him"}],"answer" : [{"id":1, "explanation":"His father did not die - Enoch (Genesis 5:24)"}]},
+	{"id":9,"question": "The word \"hats\" is only found once in the King James Version of the Bible. In which well-known story does it appear?","choices" : [{"id":1,"text":"Story of David and Goliath"},{"id":2,"text":"Story of Shadrach, Meshach and Abednego"},{"id":3,"text":"Story of Samson"},{"id":4,"text":"Story of Jonah"}],"answer" : [{"id":2, "explanation":"Story of Shadrach, Meshach and Abednego - When they were put in the fiery furnace (Daniel 3:21)"}]}
 ]
