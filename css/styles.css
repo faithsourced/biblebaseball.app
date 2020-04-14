@@ -16,7 +16,7 @@ html, body {
 	padding: 0px;
 	
 	font-family: proxima-nova, sans-serif;
-	font-weight: 100;
+	font-weight: 300;
 	font-style: normal;
 	
 	background-color: #3a793a;
@@ -39,7 +39,7 @@ body * {
 	background-image: url('../images/diamond.svg');
 	background-repeat: no-repeat;
 	background-position: center bottom;
-	background-size:  auto 100vh;
+	background-size:	auto 100vh;
 }
 
 .scoreboard {
@@ -68,8 +68,8 @@ body * {
 
 .scoreboard h4, .inning h4, .outs h4 {
 	font-family: 'Score Board', Helvetica, Arial, sans-serif;
-	font-weight: 100;
 	font-size: 3vw;
+	font-weight: 100;
 	line-height: 1;
 	text-transform: uppercase;
 	margin: 0px;
@@ -79,8 +79,8 @@ body * {
 
 .scoreboard h1, .inning h1, .outs h1 {
 	font-family: 'Score Board', Helvetica, Arial, sans-serif;
-	font-weight: 100;
 	font-size: 10vw;
+	font-weight: 100;
 	line-height: 1;
 	margin: 0px;
 	padding: 0px;
@@ -95,7 +95,7 @@ body * {
 	color: DodgerBlue;
 }
 
-.scoreboard .active  {
+.scoreboard .active	{
 	background-color: rgba(0, 0, 0, 0.3);
 }
 
@@ -119,6 +119,10 @@ body * {
 	right: 0;
 }
 
+.mound:empty {
+	display: none;
+}
+
 .mound {
 	position: absolute;
 	bottom: 27.231467473525vh;
@@ -127,15 +131,21 @@ body * {
 	height: 6.8078668683812vh;
 	line-height: 6.8078668683812vh;
 	text-align: center;
+	z-index: 1002;
 }
 
 .mound select {
+	color: #1a2327;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	-ms-appearance: none;
 	appearance: none;
+	outline: none;
+	max-width: 280px;
 	border: 1px solid #b3b8bf;
-	font-size: 12px;
+	font-family: proxima-nova, sans-serif;
+	font-weight: 300;
+	font-size: 14px;
 	margin: 0px;
 	padding: 10px;
 	padding-right: 48px;
@@ -155,35 +165,51 @@ body * {
 		1px 50px,
 		37px 100%;
 	background-repeat: no-repeat;
+	
+	-webkit-transition: all 0.15s ease-in-out;
+	-moz-transition: all 0.15s ease-in-out;
+	-ms-transition: all 0.15s ease-in-out;
+	-o-transition: all 0.15s ease-in-out;
+}
+
+.mound select:focus {
+	box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
 }
 
 .mound select::-ms-expand {
-    display: none;
+		display: none;
 }
 
-.pitcher {
-	display: none;
+.btn {
+	color: #1a2327;
 	background-color: #fff;
 	border: 1px solid #b3b8bf;
 	border-radius: 48px;
 	padding: 0 20px;
 	line-height: 30px;
 	cursor: pointer;
-	font-weight: 100;
+	font-family: proxima-nova, sans-serif;
+	font-weight: 300;
 	font-size: 14px;
 	text-decoration: none;
 	-webkit-appearance: none;
 	background-image: linear-gradient(to bottom, #fefeff, #c8ccd3);
 }
 
+.btn:active {
+	color: #1a2327;
+	background-image: linear-gradient(to bottom, #c8ccd3, #fefeff);
+}
+
 .question, .playbyplay {
 	position: relative;
 	font-family: 'Score Board', Helvetica, Arial, sans-serif;
+	font-size: 3vw;
+	font-weight: 100;
 	color: yellow;
 	width: calc(60vw - 80px);
 	margin: 0 auto;
 	text-align: center;
-	font-size: 3vw;
 	padding: 20px;
 	background-color: rgba(0, 0, 0, 0.6);
 	border: 1px solid #000;
@@ -204,7 +230,7 @@ body * {
 	margin: 0 auto;
 	background-image: url('../images/biblebaseball-logo.png');
 	background-repeat: no-repeat;
-	background-size:  contain;
+	background-size:	contain;
 	background-position: center center;
 }
 
@@ -222,6 +248,7 @@ body * {
 	text-align: center;
 	padding-bottom: 50px;
 	display: none;
+	z-index: 1001;
 }
 
 .answers button {
@@ -235,6 +262,7 @@ body * {
 	box-shadow: 0px 0px 10px rgba(0,0,0,0.5);
 	color: #fff;
 	cursor: pointer;
+	font-family: proxima-nova, sans-serif;
 	font-size: 2vw;
 	font-weight: 100;
 }
@@ -288,4 +316,50 @@ body * {
 .runner.third {
 	bottom: 30.8367019667171vh;
 	left: calc(50vw - 22.4vh);
+}
+
+/** adapted from https://codepen.io/olex/pen/MOVKgE **/
+
+#pitch_countdown {
+	display: none;
+	position: relative;
+	margin: auto;
+	height: 6.8078668683812vh;
+	width: 6.8078668683812vh;
+	text-align: center;
+	line-height: 6.8078668683812vh;
+	border-radius: 100%;
+	background: red;
+}
+
+#pitch_countdown .number {
+	color: white;
+	display: inline-block;
+}
+
+#pitch_countdown svg {
+	position: absolute;
+	top: calc(50% - 20px);
+	right: calc(50% - 20px);
+	width: 40px;
+	height: 40px;
+	transform: rotateY(-180deg) rotateZ(-90deg);
+}
+
+#pitch_countdown svg circle {
+	stroke-dasharray: 113px;
+	stroke-dashoffset: 0px;
+	stroke-linecap: round;
+	stroke-width: 2px;
+	stroke: white;
+	fill: none;
+}
+
+@keyframes countdown {
+	from {
+		stroke-dashoffset: 0px;
+	}
+	to {
+		stroke-dashoffset: 113px;
+	}
 }
