@@ -2,13 +2,19 @@
 	{
 	"id":0,
 	"name": "Spring Training - 10 Questions",
-	"difficulty" : "Medium - Hard",
+	"difficulty" : "Easy - Hard",
 	"file" : "spring-training.json"
 	},
 	{
 	"id":1,
-	"name": "Regular Season - Week 1 - 45 Questions",
-	"difficulty" : "Easy - Medium",
+	"name": "Regular Season - Week 1 - 45 Old Testament Questions",
+	"difficulty" : "Easy",
 	"file" : "regular-season-week-01.json"
+	},
+	{
+	"id":2,
+	"name": "Regular Season - Week 2 - 45 New Testament Questions",
+	"difficulty" : "Easy",
+	"file" : "regular-season-week-02.json"
 	}
 ]
