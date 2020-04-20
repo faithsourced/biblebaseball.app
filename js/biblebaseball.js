@@ -1,22 +1,14 @@
 var question_packs = [];
 var questions = [];
-var asked = [];
 var pitch = [];
-var inning = 1;
-var half = 'bottom';
-var outs = 0;
-var change_inning_delay;
-var playbyplay_delay;
-var red_score = 0;
-var blue_score = 0;
-var first_base = 0;
-var second_base = 0;
-var third_base = 0;
+var pitch_tracker = [];
 
-var pitch_speed = 0;
-var this_countdown = 0;
-var pitch_stopwatch;
-var countdown_timer = '<div id="pitch_countdown"><span class="number"></span><svg><circle r="18" cx="20" cy="20"></circle></svg></div>';
+var settings = {speed: 0, innings: 9};
+var gamescore = {home : 0, visitor : 0, inning: 1, half: 'Top', outs: 0};
+var base_runners = {first: false, second: false, third: false};
+
+var pitch_countdown = settings.speed;
+var pitch_timer;
 
 $(document).ready(function() {
 	$('.mound').on('click', '.pitcher', function() {
@@ -33,8 +25,8 @@ $(document).ready(function() {
 
 	$('.mound').on('click', '.play_ball', function() {
 		var question_pack = $('#question_pack_selector').val();
-		pitch_speed = $('#pitch_speed_selector').val();
-		this_countdown = pitch_speed;
+		settings.speed = $('#pitch_speed_selector').val();
+		pitch_countdown = settings.speed;
 		
 		if(question_pack) {
 			loadQuestions(question_pack);
@@ -43,27 +35,29 @@ $(document).ready(function() {
 });
 
 function countdown() {
-	if(pitch_speed > 0) {
-		if(this_countdown == pitch_speed) { // setup
+	var countdown_timer = '<div id="pitch_countdown"><span class="number"></span><svg><circle r="18" cx="20" cy="20"></circle></svg></div>';
+	
+	if(settings.speed > 0) {
+		if(pitch_countdown == settings.speed) { // setup
 			$(".mound").html(countdown_timer);
 			$("#pitch_countdown").fadeIn(300);
-			$('#pitch_countdown svg circle').css({'animation' : 'countdown '+pitch_speed+'s linear 1 forwards'});
+			$('#pitch_countdown svg circle').css({'animation' : 'countdown '+settings.speed+'s linear 1 forwards'});
 		}
-		if (this_countdown == 0) {
+		if (pitch_countdown == 0) {
 			out();
 		} else {
-			$('#pitch_countdown .number').html(this_countdown);
-			this_countdown--;
+			$('#pitch_countdown .number').html(pitch_countdown);
+			pitch_countdown--;
 		}
 	}
 	else {
-		clearTimeout(pitch_stopwatch);
+		clearTimeout(pitch_timer); // don't need the timer afterall
 	}
 }
 
 function resetCountdown() {
-	clearTimeout(pitch_stopwatch);
-	this_countdown = pitch_speed;
+	clearTimeout(pitch_timer);
+	pitch_countdown = settings.speed;
 	$('#pitch_countdown').fadeOut(300, function() {
 		$(".mound").empty();
 	});
@@ -77,6 +71,19 @@ function loadChoices(question, choices) {
 		$(".answers").append(choice_html);
 	});
 	$(".answers").fadeIn(300);
+}
+
+function increaseScore() {
+	var score;
+	
+	if(gamescore.half == "Bottom") {
+		score = ++gamescore.home;
+	}
+	else {
+		score = ++gamescore.visitor;
+	}
+	
+	$('.scoreboard .active h1').html(score);
 }
 
 function answer(question_id, choice_id) {
@@ -95,17 +102,17 @@ function throwPitch() {
 		pitch = pickQuestion();
 		setQuestion();
 		showQuestion();
-		pitch_stopwatch = setInterval(countdown, 1000);
+		pitch_timer = setInterval(countdown, 1000);
 	});
 }
 
 function pickQuestion() {
-	if(questions.length == asked.length) {
-		asked = [];	
+	if(questions.length == pitch_tracker.length) {
+		pitch_tracker = [];	
 	}
 	var pick = questions[Math.floor(Math.random()*questions.length)];
-	if (!includes(asked, pick.id)) {
-		asked.push(pick.id);
+	if (!includes(pitch_tracker, pick.id)) {
+		pitch_tracker.push(pick.id);
 		return pick;
 	}
 	else {
@@ -195,13 +202,13 @@ function removePitcher() {
 
 function showRunners() {
 	$('.runner').hide();
-	if(first_base == 1) {
+	if(base_runners.first == true) {
 		$('.runner.first').fadeIn(300);
 	}
-	if(second_base == 1) {
+	if(base_runners.second == true) {
 		$('.runner.second').fadeIn(300);
 	}
-	if(third_base == 1) {
+	if(base_runners.third == true) {
 		$('.runner.third').fadeIn(300);
 	}
 }
@@ -230,16 +237,18 @@ function hit() {
 		hitSingle();
 	}
 	
-	if (playbyplay_delay) {
-		window.clearTimeout(playbyplay_delay);
-	}
-	playbyplay_delay = window.setTimeout(function() {
-		addPitcher();
-	}, 2000);
-	
 	$('.playbyplay').html("<p>Hit! "+hit_text+"</p>").fadeIn(300);
 	
-	showRunners();
+	if(gameOver()) {
+		gameRecap();
+	}
+	else {
+		setTimeout(function() {
+			addPitcher();
+		}, 2000);
+		
+		showRunners();
+	}
 }
 
 function out() {
@@ -248,110 +257,103 @@ function out() {
 	hideChoices();
 	$('.playbyplay').html("<p>Out!<br />"+questions[pitch.id]["answer"][0].explanation+"</p>").fadeIn(300);
 	
-	$('.outs h1').each(function () {
-		var $this = $(this);
-		var outs = parseInt($(this).html(), 10);
-		++outs;
-		$this.html(outs);
-		
-		if(outs == 3) {
-			if (change_inning_delay) {
-				window.clearTimeout(change_inning_delay);
-			}
-			change_inning_delay = window.setTimeout(function() {
-				$this.html(0);
+	++gamescore.outs;
+	$('.outs h1').html(gamescore.outs);
+	
+	if(gameOver()) {
+		gameRecap();
+	}
+	else {
+		if(gamescore.outs == 3) {
+			setTimeout(function() {
 				changeInning();
 			}, 1000);
 		}
-	});
-	
-	if (playbyplay_delay) {
-		window.clearTimeout(playbyplay_delay);
+		
+		setTimeout(function() {
+			addPitcher();
+		}, 2000);
 	}
-	playbyplay_delay = window.setTimeout(function() {
-		addPitcher();
-	}, 2000);
 }
 
 function hitHomerun() {
-	if(third_base == 1) {
+	if(base_runners.third == true) {
 		increaseScore();
-		third_base = 0;
+		base_runners.third = false;
 	}
-	if(second_base == 1) {
+	if(base_runners.second == true) {
 		increaseScore();
-		second_base = 0;
+		base_runners.second = false;
 	}
-	if(first_base == 1) {
+	if(base_runners.first == true) {
 		increaseScore();
-		first_base = 0;
+		base_runners.first = false;
 	}
 	increaseScore();
 	resetBases();
 }
 
 function hitTriple() {
-	if(third_base == 1) {
+	if(base_runners.third == true) {
 		increaseScore();
-		third_base = 0;
+		base_runners.third = false;
 	}
-	if(second_base == 1) {
+	if(base_runners.second == true) {
 		increaseScore();
-		second_base = 0;
+		base_runners.second = false;
 	}
-	if(first_base == 1) {
+	if(base_runners.first == true) {
 		increaseScore();
-		first_base = 0;
+		base_runners.first = false;
 	}
-	third_base = 1;
+	base_runners.third = true;
 }
 
 function hitDouble() {
-	if(third_base == 1) {
+	if(base_runners.third == true) {
 		increaseScore();
-		third_base = 0;
+		base_runners.third = false;
 	}
-	if(second_base == 1) {
+	if(base_runners.second == true) {
 		increaseScore();
-		second_base = 0;
+		base_runners.second = false;
 	}
-	if(first_base == 1) {
-		third_base = 1;
-		first_base = 0;
+	if(base_runners.first == true) {
+		base_runners.third = true;
+		base_runners.first = false;
 	}
 	
-	second_base = 1;
+	base_runners.second = true;
 }
 
 function hitSingle() {
-	if(third_base == 1) {
+	if(base_runners.third == true) {
 		increaseScore();
-		third_base = 0;
+		base_runners.third = false;
 	}
-	if(second_base == 1) {
-		second_base = 0;
-		third_base = 1;
+	if(base_runners.second == true) {
+		base_runners.second = false;
+		base_runners.third = true;
 	}
-	if(first_base == 1) {
-		second_base = 1;
+	if(base_runners.first == true) {
+		base_runners.second = true;
 	}
 	
-	first_base = 1;
+	base_runners.first = true;
 }
 
-function resetBases() {
-	$('.runner').hide();
-	first_base = 0;
-	second_base = 0;
-	third_base = 0;
-}
-
-function increaseScore() {
-	$('.scoreboard>div.active').each(function () {
-		var score = parseInt($(this).find('h1').html(), 10);
-		++score;
-		$(this).find('h1').html(score);
+function resetBases(half) {
+	$('.runner').fadeOut(300, function() {
+		if(half == "Bottom") {
+			$(this).removeClass('home').addClass('visitor');
+		}
+		else {
+			$(this).removeClass('visitor').addClass('home');
+		}
 	});
+	base_runners.first = false;
+	base_runners.second = false;
+	base_runners.third = false;
 }
 
 function setQuestion() {
@@ -391,28 +393,50 @@ function hideChoices() {
 	$(".answer").fadeOut(300);
 }
 
-function changeInning() {
-	$('.inning h4').each(function () {
-		var half = $(this).html();
-		resetBases();
-		$('.scoreboard>div.active').removeClass('active');
-		
-		if(half == "Bottom") {
-			$('.scoreboard .red').addClass('active');
-			$('.runner').removeClass('blue').addClass('red');
-			$(this).html("Top");
-			$(this).parent().find("h1").each(function () {
-				var inning = parseInt($(this).html(), 10);
-				++inning;
-				$(this).html(inning);
-			});
-		}
-		else {
-			$('.runner').removeClass('red').addClass('blue');
-			$('.scoreboard .blue').addClass('active');
-			$(this).html("Bottom");
-		}
-	});
+function changeInning() {	
+	resetBases(gamescore.half);
+	
+	$('.scoreboard .active').removeClass('active');
+
+	if(gamescore.half == "Bottom") {
+		$('.scoreboard .visitor').addClass('active');
+		++gamescore.inning;
+		$('.inning h1').html(gamescore.inning);
+		gamescore.half = "Top";
+	}
+	else {
+		$('.scoreboard .home').addClass('active');
+		gamescore.half = "Bottom";
+	}
+	$('.inning h4').html(gamescore.half);
+	gamescore.outs = 0;
+	$('.outs h1').html(gamescore.outs);
+}
+
+function gameOver() {
+	if(gamescore.half == "Top" && gamescore.outs == 3 && gamescore.inning >= settings.innings && gamescore.home > gamescore.visitor) { // no need to play the bottom half of the ninth, home team won
+		return true;
+	}
+	if(gamescore.half == "Bottom" && gamescore.inning >= settings.innings && gamescore.home > gamescore.visitor) { // walk off win
+		return true;
+	}
+}
+
+function gameRecap() {
+	setTimeout(function() {
+		$('.scoreboard .active').removeClass('active');
+		$('.playbyplay').fadeOut(300, function() {
+			var winner = '';
+			if(gamescore.home > gamescore.visitor) {
+				winner = 'Home';
+			}
+			else {
+				winner = 'Visitor';
+			}
+
+			$(this).html("<p>Game Over!<br />"+winner+" Wins!</p>").fadeIn(300);
+		});	
+	}, 2000);
 }
 
 loadQuestionPacks();
