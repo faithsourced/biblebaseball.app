@@ -2,19 +2,25 @@
 	{
 	"id":0,
 	"name": "Spring Training - 10 Questions",
-	"difficulty" : "Easy - Hard",
+	"difficulty" : "Easy - Difficult",
 	"file" : "spring-training.json"
 	},
 	{
 	"id":1,
-	"name": "Regular Season - Week 1 - 45 Old Testament Questions",
+	"name": "Regular Season - Week 1 - Old Testament - 45 Questions",
 	"difficulty" : "Easy",
 	"file" : "regular-season-week-01.json"
 	},
 	{
 	"id":2,
-	"name": "Regular Season - Week 2 - 45 New Testament Questions",
+	"name": "Regular Season - Week 2 - New Testament - 45 Questions",
 	"difficulty" : "Easy",
 	"file" : "regular-season-week-02.json"
+	},
+	{
+	"id":3,
+	"name": "Regular Season - Week 3 - Genesis - 100 Questions",
+	"difficulty" : "Difficult",
+	"file" : "regular-season-week-03.json"
 	}
 ]
